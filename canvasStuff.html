@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+
+</script> 
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid#000000;">
+	
+</canvas>
+
+<script>
+
+	setInterval(MoveTheCircles, 20);
+ 	var inc = .1;
+
+
+function createCircle (x, y, r)
+{
+	c = document.getElementById("myCanvas");
+	ctx = c.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(x,y,r, 0 ,2*Math.PI);
+	ctx.stroke(); 
+
+}
+
+
+
+function createManyCircles (numCircles, x, y, radiusDif)
+{
+	ogRadDif = radiusDif;
+
+	for (var i = 0; i < numCircles; i++) 
+	{
+		createCircle(x, y, radiusDif);
+
+		radiusDif+=ogRadDif;
+
+	}
+}
+
+/*createManyCircles(500, 0, 0, 2);
+createManyCircles(500, 500, 500, 2);
+createManyCircles(500, 0, 500, 2); */
+
+function MoveTheCircles()
+{
+	
+	/*var c = document.getElementById("myCanvas");
+	var ctx = c.getContext("2d");
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, 500, 500);
+	ctx.clearRect(20, 20, 100, 50); */
+	
+
+	createManyCircles(1000, inc, inc, 5);
+	createManyCircles(1000, 500 - inc, 500 - inc, 5);
+	inc+=.1;
+
+	
+
+}
+
+
+
+
+</script> 
+
+
+
+</body>
+</html>
