@@ -1,11 +1,11 @@
 
-var xspeed = 0;
-var yspeed = 0;
-var xpos = 500;
-var ypos = 30;
+var xspeed = 6;
+var yspeed = 3;
+var xpos = 30;
+var ypos = 220;
 var yacceleration = .2;
-var xacceleration = 0;
-var negativeYAcceleration = -(yacceleration);
+var xacceleration = .2;
+
 
 function createCircle (x, y, r, type, color)
 {
@@ -27,38 +27,55 @@ function createCircle (x, y, r, type, color)
 	
 
 }
-
-function moveCircle()
+var OrbitCenterY = 250;
+var OrbitCenterX = 500;
+function moveCircleAroundAnotherCircle()
 {
 
 
-
-		blankIt();
-			createCircle(500, 250, 50, "fill", "orange");
+	/* blankIt(); */
+	createCircle(OrbitCenterX, OrbitCenterY, 50, "fill", "yellow");
+	
+	
+		createCircle(xpos, ypos, 1, "stroke", "red");
 		
-		if(ypos < 250)
-		{
-			createCircle(xpos, ypos, 10);
-			yspeed+=yacceleration;
-			ypos+=yspeed;
-			xspeed+=xacceleration;
-			xpos+=xspeed;
+		Ydistance = getYDistanceFromOrbitCenter();
+		Xdistance = getXDistanceFromOrbitCenter();
+		hypotenuse = getDistanceFromCenter();
+		newYAccel = (Ydistance*yacceleration)/hypotenuse;
+		newXAccel = (Xdistance*xacceleration)/hypotenuse;
+
+
+
+		yspeed+=newYAccel;
+		ypos+=yspeed;
+		xspeed+=newXAccel;
+		xpos+=xspeed;
+
 	
-		}
-		else
-		{
-			createCircle(xpos, ypos, 10);
-			yspeed+=negativeYAcceleration;
-			ypos+=yspeed;
-			xspeed+=xacceleration;
-			xpos+=xspeed;
-		}
 	
+	
+}
+
+function getYDistanceFromOrbitCenter()
+{
+	return OrbitCenterY - ypos;
+}
+
+function getXDistanceFromOrbitCenter()
+{
+	return OrbitCenterX - xpos;
+}
+
+function getDistanceFromCenter () 
+{
+	xVal = getXDistanceFromOrbitCenter();
+	yVal = getYDistanceFromOrbitCenter();
+
+	return Math.sqrt(Math.pow(xVal, 2) + Math.pow(yVal, 2));
 
 
 }
-
-
 function blankIt()
 {
 	c = document.getElementById("myCanvas");

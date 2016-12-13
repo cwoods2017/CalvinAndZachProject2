@@ -22,7 +22,7 @@ function createCircle (x, y, r)
 	ctx.stroke(); 
 
 }
-function createRectangle
+ /* function createRectangle
 {
 	c = document.getElementById("myCanvas");
 	ctx = c.getContext("2d");
@@ -30,16 +30,16 @@ function createRectangle
 
 
 }
-
+ */
 function createManyCircles (numCircles, x, y, radiusDif)
 {
-	ogRadDif = radiusDif;
+	oldRadDif = radiusDif;
 
 	for (var i = 0; i < numCircles; i++) 
 	{
 		createCircle(x, y, radiusDif);
 
-		radiusDif+=ogRadDif;
+		radiusDif+=oldRadDif;
 
 	}
 }
