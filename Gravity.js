@@ -1,10 +1,14 @@
 
 var xspeed = 6;
-var yspeed = 3;
-var xpos = 30;
-var ypos = 220;
-var yacceleration = .2;
-var xacceleration = .2;
+var yspeed = 0;
+var xpos = 400;
+var ypos = 125;
+var acceleration = .9;
+
+
+
+
+
 
 
 function createCircle (x, y, r, type, color)
@@ -29,33 +33,34 @@ function createCircle (x, y, r, type, color)
 }
 var OrbitCenterY = 250;
 var OrbitCenterX = 500;
-function moveCircleAroundAnotherCircle()
+var OrbitCenterSpeedX = 0;
+var OrbitCenterSpeedY = 0;
+function draw()
 {
+	blankIt();
+	
+	createOrbitCenter(); 
+	
+	createPlanetOne(6, "stroke", "blue");
+
+}
 
 
-	/* blankIt(); */
-	createCircle(OrbitCenterX, OrbitCenterY, 50, "fill", "yellow");
-	
-	
-		createCircle(xpos, ypos, 1, "stroke", "red");
+
+function createPlanetOne(r, type, color)
+{
+	createCircle(xpos, ypos, r, type, color);
 		
-		Ydistance = getYDistanceFromOrbitCenter();
-		Xdistance = getXDistanceFromOrbitCenter();
-		hypotenuse = getDistanceFromCenter();
-		newYAccel = (Ydistance*yacceleration)/hypotenuse;
-		newXAccel = (Xdistance*xacceleration)/hypotenuse;
-
-
-
+		
+		newYAccel= findComponentYAcceleration();
+		newXAccel= findComponentXAcceleration();
 		yspeed+=newYAccel;
 		ypos+=yspeed;
 		xspeed+=newXAccel;
 		xpos+=xspeed;
-
-	
-	
-	
 }
+
+
 
 function getYDistanceFromOrbitCenter()
 {
@@ -84,4 +89,38 @@ function blankIt()
 	ctx.fillRect(0, 0, 1000, 500);
 	ctx.clearRect(0, 0, 1000, 500);
 
+}
+
+
+
+function findComponentYAcceleration()
+{
+	Ydistance = getYDistanceFromOrbitCenter();
+	hypotenuse = getDistanceFromCenter();
+	newYAccel = (Ydistance*acceleration)/hypotenuse;
+
+
+	return newYAccel;
+}
+
+function createOrbitCenter()
+{
+	
+
+	createCircle(OrbitCenterX, OrbitCenterY, 21, "fill", "white"); 
+
+	OrbitCenterX+=OrbitCenterSpeedX;
+	OrbitCenterY+=OrbitCenterSpeedY;
+	
+	 createCircle(OrbitCenterX, OrbitCenterY, 20, "fill", "black"); 
+
+
+	
+}
+function findComponentXAcceleration()
+{
+	Xdistance = getXDistanceFromOrbitCenter();
+	hypotenuse = getDistanceFromCenter();
+	newXAccel = (Xdistance*acceleration)/hypotenuse;
+	return newXAccel;
 }

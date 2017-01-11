@@ -4,15 +4,27 @@
 <canvas id="myCanvas" width="1000" height="500" 
 		style="border:1px solid#000000">
 </canvas>
+<form>
+	Planet x-coordinate: <input type="text" id="planetXPos"></input>
+	Planet y-coordinate: <input type="text" id="planetYPos"> </input>
+
+
+</form>
+
+
 <script src="Gravity.js">
 </script>
 <script type="text/javascript">
 
 
 
-	setInterval(moveCircleAroundAnotherCircle, 20);
+	//setInterval(moveCircleAroundAnotherCircle, 20); 
 
 </script>
 
+
+	
+
+	 <button onclick="setInterval(draw, 20)"> Go!</button>
 </body>
 </html>
