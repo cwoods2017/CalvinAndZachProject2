@@ -1,44 +1,126 @@
 
-var inc = -.1;
+var xspeed = 6;
+var yspeed = 0;
+var xpos = 400;
+var ypos = 125;
+var acceleration = .9;
 
-function createCircle (x, y, r)
+
+
+
+
+
+
+function createCircle (x, y, r, type, color)
 {
 	c = document.getElementById("myCanvas");
 	ctx = c.getContext("2d");
 	ctx.beginPath();
 	ctx.arc(x,y,r, 0 ,2*Math.PI);
-	ctx.stroke();
-	ctx.fillStyle = "black";
-	ctx.fill();
-
-}
-
-function moveCircle()
-{
-
-
-
-	blankIt();
-	if(250 - inc <= 0)
-		createCircle(250, 250, 25);
+	if(type == "fill")
+	{
+		ctx.fillStyle = color;
+		ctx.fill();
+	}
+		
 	else
 	{
-		createCircle(250, 250 - inc, 25);
-		//change the below constant to alter the force of gravity
-		inc+=(inc*.220);
+		ctx.strokeStyle = color;
+		ctx.stroke();	
 	}
 	
 
+}
+var OrbitCenterY = 250;
+var OrbitCenterX = 500;
+var OrbitCenterSpeedX = 0;
+var OrbitCenterSpeedY = 0;
+function draw()
+{
+	blankIt();
+	
+	createOrbitCenter(); 
+	
+	createPlanetOne(6, "stroke", "blue");
 
 }
 
 
+
+function createPlanetOne(r, type, color)
+{
+	createCircle(xpos, ypos, r, type, color);
+		
+		
+		newYAccel= findComponentYAcceleration();
+		newXAccel= findComponentXAcceleration();
+		yspeed+=newYAccel;
+		ypos+=yspeed;
+		xspeed+=newXAccel;
+		xpos+=xspeed;
+}
+
+
+
+function getYDistanceFromOrbitCenter()
+{
+	return OrbitCenterY - ypos;
+}
+
+function getXDistanceFromOrbitCenter()
+{
+	return OrbitCenterX - xpos;
+}
+
+function getDistanceFromCenter () 
+{
+	xVal = getXDistanceFromOrbitCenter();
+	yVal = getYDistanceFromOrbitCenter();
+
+	return Math.sqrt(Math.pow(xVal, 2) + Math.pow(yVal, 2));
+
+
+}
 function blankIt()
 {
 	c = document.getElementById("myCanvas");
 	ctx = c.getContext("2d");
 	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, 500, 500);
-	ctx.clearRect(0, 0, 500, 500);
+	ctx.fillRect(0, 0, 1000, 500);
+	ctx.clearRect(0, 0, 1000, 500);
 
+}
+
+
+
+function findComponentYAcceleration()
+{
+	Ydistance = getYDistanceFromOrbitCenter();
+	hypotenuse = getDistanceFromCenter();
+	newYAccel = (Ydistance*acceleration)/hypotenuse;
+
+
+	return newYAccel;
+}
+
+function createOrbitCenter()
+{
+	
+
+	createCircle(OrbitCenterX, OrbitCenterY, 21, "fill", "white"); 
+
+	OrbitCenterX+=OrbitCenterSpeedX;
+	OrbitCenterY+=OrbitCenterSpeedY;
+	
+	 createCircle(OrbitCenterX, OrbitCenterY, 20, "fill", "black"); 
+
+
+	
+}
+function findComponentXAcceleration()
+{
+	Xdistance = getXDistanceFromOrbitCenter();
+	hypotenuse = getDistanceFromCenter();
+	newXAccel = (Xdistance*acceleration)/hypotenuse;
+	return newXAccel;
 }
