@@ -1,9 +1,9 @@
 
-var xspeed = 6;
-var yspeed = 0;
-var xpos = 400;
-var ypos = 125;
-var acceleration = .9;
+var xspeed = 0;
+var yspeed = 6;
+var xpos = 750;
+var ypos = 250;
+var acceleration;
 
 
 
@@ -22,13 +22,13 @@ function createCircle (x, y, r, type, color)
 		ctx.fillStyle = color;
 		ctx.fill();
 	}
-		
+
 	else
 	{
 		ctx.strokeStyle = color;
-		ctx.stroke();	
+		ctx.stroke();
 	}
-	
+
 
 }
 var OrbitCenterY = 250;
@@ -38,9 +38,9 @@ var OrbitCenterSpeedY = 0;
 function draw()
 {
 	blankIt();
-	
-	createOrbitCenter(); 
-	
+
+	createOrbitCenter();
+
 	createPlanetOne(6, "stroke", "blue");
 
 }
@@ -50,8 +50,8 @@ function draw()
 function createPlanetOne(r, type, color)
 {
 	createCircle(xpos, ypos, r, type, color);
-		
-		
+
+		updateAcceleration();
 		newYAccel= findComponentYAcceleration();
 		newXAccel= findComponentXAcceleration();
 		yspeed+=newYAccel;
@@ -72,7 +72,8 @@ function getXDistanceFromOrbitCenter()
 	return OrbitCenterX - xpos;
 }
 
-function getDistanceFromCenter () 
+
+function getDistanceFromCenter ()
 {
 	xVal = getXDistanceFromOrbitCenter();
 	yVal = getYDistanceFromOrbitCenter();
@@ -105,17 +106,17 @@ function findComponentYAcceleration()
 
 function createOrbitCenter()
 {
-	
 
-	createCircle(OrbitCenterX, OrbitCenterY, 21, "fill", "white"); 
+
+	createCircle(OrbitCenterX, OrbitCenterY, 21, "fill", "white");
 
 	OrbitCenterX+=OrbitCenterSpeedX;
 	OrbitCenterY+=OrbitCenterSpeedY;
-	
-	 createCircle(OrbitCenterX, OrbitCenterY, 20, "fill", "black"); 
+
+	 createCircle(OrbitCenterX, OrbitCenterY, 20, "fill", "black");
 
 
-	
+
 }
 function findComponentXAcceleration()
 {
@@ -123,4 +124,15 @@ function findComponentXAcceleration()
 	hypotenuse = getDistanceFromCenter();
 	newXAccel = (Xdistance*acceleration)/hypotenuse;
 	return newXAccel;
+}
+
+
+function updateAcceleration()
+{
+
+	newAccel = 7000/Math.pow(getDistanceFromCenter(), 2);
+
+	acceleration = newAccel;
+
+
 }
