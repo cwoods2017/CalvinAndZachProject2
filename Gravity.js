@@ -1,8 +1,8 @@
 
-var xspeed = 0;
-var yspeed = 6;
-var xpos = 750;
-var ypos = 250;
+var xspeed = 6;
+var yspeed = 0;
+var xpos = 500;
+var ypos = 100;
 var acceleration;
 
 
@@ -37,7 +37,7 @@ var OrbitCenterSpeedX = 0;
 var OrbitCenterSpeedY = 0;
 function draw()
 {
-	blankIt();
+	// blankIt();
 
 	createOrbitCenter();
 
@@ -87,8 +87,8 @@ function blankIt()
 	c = document.getElementById("myCanvas");
 	ctx = c.getContext("2d");
 	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, 1000, 500);
-	ctx.clearRect(0, 0, 1000, 500);
+	ctx.fillRect(0, 0, 1000, 1000);
+	ctx.clearRect(0, 0, 1000, 1000);
 
 }
 
@@ -130,7 +130,7 @@ function findComponentXAcceleration()
 function updateAcceleration()
 {
 
-	newAccel = 7000/Math.pow(getDistanceFromCenter(), 2);
+	newAccel = 7000/Math.pow(getDistanceFromCenter() * 1.4, 2);
 
 	acceleration = newAccel;
 
